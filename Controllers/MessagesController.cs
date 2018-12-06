@@ -7,6 +7,7 @@ using Microsoft.Bot.Builder.Dialogs;
 using System.Web.Http.Description;
 using System.Net.Http;
 using System.Diagnostics;
+using System.Linq;
 
 namespace Microsoft.Bot.Sample.LuisBot
 {
@@ -46,9 +47,24 @@ namespace Microsoft.Bot.Sample.LuisBot
                 // Use Activity.MembersAdded and Activity.MembersRemoved and Activity.Action for info
                 // Not available in all channels
 
-                var reply = message.CreateReply("Hello ! I'm a robot employee of Sicoob Credicitrus. I'm new to the company and I'm still learning many things. Do you need any help?");
-                ConnectorClient connector = new ConnectorClient(new Uri(message.ServiceUrl));
-                await connector.Conversations.ReplyToActivityAsync(reply);
+                //var reply = message.CreateReply("Hello ! I'm a robot employee of Sicoob Credicitrus. I'm new to the company and I'm still learning many things. Do you need any help?");
+                //ConnectorClient connector = new ConnectorClient(new Uri(message.ServiceUrl));
+                //await connector.Conversations.ReplyToActivityAsync(reply);
+
+                IConversationUpdateActivity update = message;
+                var client = new ConnectorClient(new Uri(message.ServiceUrl), new MicrosoftAppCredentials());
+                if (update.MembersAdded != null && update.MembersAdded.Any())
+                {
+                    foreach (var newMember in update.MembersAdded)
+                    {
+                        if (newMember.Id != message.Recipient.Id)
+                        {
+                            var reply = message.CreateReply();
+                            reply.Text = $"Hello {newMember.Name}! I'm a robot employee of Sicoob Credicitrus. I'm new to the company and I'm still learning many things. Do you need any help?";
+                            await client.Conversations.ReplyToActivityAsync(reply);
+                        }
+                    }
+                }
             }
             else if (message.Type == ActivityTypes.ContactRelationUpdate)
             {
