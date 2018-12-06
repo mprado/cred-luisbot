@@ -28,12 +28,12 @@ namespace Microsoft.Bot.Sample.LuisBot
             }
             else
             {
-                HandleSystemMessage(activity);
+                await HandleSystemMessage(activity);
             }
             return new HttpResponseMessage(System.Net.HttpStatusCode.Accepted);
         }
 
-        private Activity HandleSystemMessage(Activity message)
+        private async Task<Activity> HandleSystemMessage(Activity message)
         {
             if (message.Type == ActivityTypes.DeleteUserData)
             {
@@ -50,6 +50,14 @@ namespace Microsoft.Bot.Sample.LuisBot
             {
                 // Handle add/remove from contact lists
                 // Activity.From + Activity.Action represent what happened
+
+                if (message.Action == "add")
+                {
+                    var reply = message.CreateReply("WELCOME!!!");
+                    ConnectorClient connector = new ConnectorClient(new Uri(message.ServiceUrl));
+                    await connector.Conversations.ReplyToActivityAsync(reply);
+                }
+
             }
             else if (message.Type == ActivityTypes.Typing)
             {
