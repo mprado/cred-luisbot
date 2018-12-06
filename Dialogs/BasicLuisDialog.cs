@@ -30,7 +30,9 @@ namespace Microsoft.Bot.Sample.LuisBot
         [LuisIntent("Greeting")]
         public async Task GreetingIntent(IDialogContext context, LuisResult result)
         {
-            await this.ShowLuisResult(context, result);
+            //await this.ShowLuisResult(context, result);
+
+            await context.PostAsync($"Hi! How are you?");
         }
 
         [LuisIntent("Cancel")]
@@ -47,10 +49,8 @@ namespace Microsoft.Bot.Sample.LuisBot
 
         private async Task ShowLuisResult(IDialogContext context, LuisResult result) 
         {
-            await this.ShowLuisResult(context, result);
-            
-            //await context.PostAsync($"You have reached {result.Intents[0].Intent}. You said: {result.Query}");
-            //context.Wait(MessageReceived);
+            await context.PostAsync($"You have reached {result.Intents[0].Intent}. You said: {result.Query}");
+            context.Wait(MessageReceived);
         }
     }
 }
