@@ -31,6 +31,7 @@ namespace Microsoft.Bot.Sample.LuisBot
 
             string message = $"I'm the Notes bot. I can understand requests to create, delete, and read notes. \n\n Detected intent: " + string.Join(", ", result.Intents.Select(i => i.Intent));
             await context.PostAsync(message);
+            context.Wait(MessageReceived);
         }
 
         //[LuisIntent("None")]
