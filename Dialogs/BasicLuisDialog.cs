@@ -20,16 +20,11 @@ namespace Microsoft.Bot.Sample.LuisBot
         {
         }
 
-        /// <summary>
-        /// Send a generic help message if an intent without an intent handler is detected.
-        /// </summary>
-        /// <param name="context">Dialog context.</param>
-        /// <param name="result">The result from LUIS.</param>
         [LuisIntent("")]
         public async Task None(IDialogContext context, LuisResult result)
         {
 
-            string message = $"I'm the Notes bot. I can understand requests to create, delete, and read notes. \n\n Detected intent: " + string.Join(", ", result.Intents.Select(i => i.Intent));
+            string message = $"I'm the Cred Bot. I can understand requests to create, delete, and read notes. \n\n Detected intent: " + string.Join(", ", result.Intents.Select(i => i.Intent));
             await context.PostAsync(message);
             context.Wait(MessageReceived);
         }
