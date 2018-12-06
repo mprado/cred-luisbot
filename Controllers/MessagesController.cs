@@ -45,18 +45,17 @@ namespace Microsoft.Bot.Sample.LuisBot
                 // Handle conversation state changes, like members being added and removed
                 // Use Activity.MembersAdded and Activity.MembersRemoved and Activity.Action for info
                 // Not available in all channels
+
+                var reply = message.CreateReply("Hello ! I'm a robot employee of Sicoob Credicitrus. I'm new to the company and I'm still learning many things. Do you need any help?");
+                ConnectorClient connector = new ConnectorClient(new Uri(message.ServiceUrl));
+                await connector.Conversations.ReplyToActivityAsync(reply);
             }
             else if (message.Type == ActivityTypes.ContactRelationUpdate)
             {
                 // Handle add/remove from contact lists
                 // Activity.From + Activity.Action represent what happened
 
-                if (message.Action == "add")
-                {
-                    var reply = message.CreateReply("WELCOME!!!");
-                    ConnectorClient connector = new ConnectorClient(new Uri(message.ServiceUrl));
-                    await connector.Conversations.ReplyToActivityAsync(reply);
-                }
+
 
             }
             else if (message.Type == ActivityTypes.Typing)
