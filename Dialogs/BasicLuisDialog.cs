@@ -49,7 +49,7 @@ namespace Microsoft.Bot.Sample.LuisBot
         {
             //await this.ShowLuisResult(context, result);
             
-            await context.PostAsync($"1 You have reached {result.Intents[0].Intent}. You said: {result.Query}");
+            await context.PostAsync($"- You have reached {result.Intents[0].Intent}. You said: {result.Query}");
             context.Wait(MessageReceived);
         }
     }
