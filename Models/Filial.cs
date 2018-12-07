@@ -8,5 +8,8 @@
         public string Bairro { get; set; }
         public string Municipio { get; set; }
         public string UF { get; set; }
+        public string Telefone { get; set; }
+        public string Latitude { get; set; }
+        public string Longitude { get; set; }
     }
 }

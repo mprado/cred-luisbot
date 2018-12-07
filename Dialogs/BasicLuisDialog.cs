@@ -62,6 +62,10 @@ namespace Microsoft.Bot.Sample.LuisBot
                     await context.PostAsync($"O PA {filial.Numero} está na cidade de { filial.Municipio}/{ filial.UF}");
                     context.Wait(MessageReceived);
                 }
+                else
+                {
+                    await this.ShowLuisResult(context, result);
+                }
             }
             else
             {
