@@ -40,25 +40,31 @@ namespace Microsoft.Bot.Sample.LuisBot
         [LuisIntent("PA")]
         public async Task PAIntent(IDialogContext context, LuisResult result)
         {
-            var numeroFilial = result.Entities.FirstOrDefault(c => c.Type == "numero_pa");
-            var filial = new PARepository().ObterPorNumero(Convert.ToInt32(numeroFilial.Entity));
+            Filial filial;
 
-            if ((result.Query.Contains("localização")) || 
-                (result.Query.Contains("localizacao")) || 
+            var numeroFilial = result.Entities.FirstOrDefault(c => c.Type == "numero_pa");
+
+            if (numeroFilial != null && numeroFilial.Entity != null)
+            {
+                filial = new PARepository().ObterPorNumero(Convert.ToInt32(numeroFilial.Entity));
+
+                if ((result.Query.Contains("localização")) ||
+                (result.Query.Contains("localizacao")) ||
                 (result.Query.Contains("onde fica")) ||
                 (result.Query.Contains("onde é")) ||
                 (result.Query.Contains("endereço")) ||
                 (result.Query.Contains("endereco")))
-            {
-                await context.PostAsync($"A localização do PA {filial.Numero} - {filial.Descricao} é:");
-                context.Wait(MessageReceived);
+                {
+                    await context.PostAsync($"A localização do PA {filial.Numero} - {filial.Descricao} é:");
+                    context.Wait(MessageReceived);
 
-                await context.PostAsync($"{filial.Endereco}, {filial.Bairro} - {filial.Municipio}/{filial.UF}");
-                context.Wait(MessageReceived);
+                    await context.PostAsync($"{filial.Endereco}, {filial.Bairro} - {filial.Municipio}/{filial.UF}");
+                    context.Wait(MessageReceived);
+                }
             }
             else
             {
-                await context.PostAsync($"Humm... Não consegui entender! O que você precisa saber sobre nossos PA's? Tente novamente...");
+                await context.PostAsync($"Humm... Não consegui entender! O que você precisa saber sobre nossos PA's? \n Ex.: Qual endereço do PA 5 ?");
                 context.Wait(MessageReceived);
             }
         }
