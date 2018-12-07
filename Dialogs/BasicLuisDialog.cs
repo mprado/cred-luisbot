@@ -40,6 +40,8 @@ namespace Microsoft.Bot.Sample.LuisBot
         [LuisIntent("PA")]
         public async Task PAIntent(IDialogContext context, LuisResult result)
         {
+            await this.ShowLuisResult(context, result);
+
             Filial filial;
 
             var numeroFilial = result.Entities.FirstOrDefault(c => c.Type == "numero_pa");
@@ -61,10 +63,6 @@ namespace Microsoft.Bot.Sample.LuisBot
                 {
                     await context.PostAsync($"O PA {filial.Numero} está na cidade de { filial.Municipio}/{ filial.UF}");
                     context.Wait(MessageReceived);
-                }
-                else
-                {
-                    await this.ShowLuisResult(context, result);
                 }
             }
             else
