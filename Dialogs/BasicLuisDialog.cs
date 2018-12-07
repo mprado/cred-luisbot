@@ -2,7 +2,9 @@ using System;
 using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
-
+using LuisBot.Data;
+using LuisBot.Models;
+using LuisBot.Repositories;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Luis;
 using Microsoft.Bot.Builder.Luis.Models;
@@ -38,7 +40,27 @@ namespace Microsoft.Bot.Sample.LuisBot
         [LuisIntent("PA")]
         public async Task PAIntent(IDialogContext context, LuisResult result)
         {
-            await this.ShowLuisResult(context, result);
+            var numeroFilial = result.Entities.FirstOrDefault(c => c.Type == "numero_pa");
+            var filial = new PARepository().ObterPorNumero(Convert.ToInt32(numeroFilial.Entity));
+
+            if ((result.Query.Contains("localização")) || 
+                (result.Query.Contains("localizacao")) || 
+                (result.Query.Contains("onde fica")) ||
+                (result.Query.Contains("onde é")) ||
+                (result.Query.Contains("endereço")) ||
+                (result.Query.Contains("endereco")))
+            {
+                await context.PostAsync($"A localização do PA {filial.Numero} - {filial.Descricao} é:");
+                context.Wait(MessageReceived);
+
+                await context.PostAsync($"{filial.Endereco}, {filial.Bairro} - {filial.Municipio}/{filial.UF}");
+                context.Wait(MessageReceived);
+            }
+            else
+            {
+                await context.PostAsync($"Humm... Não consegui entender! O que você precisa saber sobre nossos PA's? Tente novamente...");
+                context.Wait(MessageReceived);
+            }
         }
 
         [LuisIntent("Cancel")]
