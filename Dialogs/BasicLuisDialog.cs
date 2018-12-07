@@ -48,17 +48,17 @@ namespace Microsoft.Bot.Sample.LuisBot
             {
                 filial = new PARepository().ObterPorNumero(Convert.ToInt32(numeroFilial.Entity));
 
-                if ((result.Query.Contains("localização")) ||
-                (result.Query.Contains("localizacao")) ||
-                (result.Query.Contains("onde")) ||
-                (result.Query.Contains("endereço")) ||
-                (result.Query.Contains("endereco")))
+                if ((result.Query.ToLower().Contains("localização")) ||
+                (result.Query.ToLower().Contains("localizacao")) ||
+                (result.Query.ToLower().Contains("onde")) ||
+                (result.Query.ToLower().Contains("endereço")) ||
+                (result.Query.ToLower().Contains("endereco")))
                 {
                     await context.PostAsync($"A localização do PA {filial.Numero} é...");
                     await context.PostAsync($"{ filial.Endereco}, { filial.Bairro} - { filial.Municipio}/{ filial.UF}");
                     context.Wait(MessageReceived);
                 }
-                else if (result.Query.Contains("qual é") || result.Query.Contains("qual e"))
+                else if (result.Query.ToLower().Contains("qual é") || result.Query.ToLower().Contains("qual e"))
                 {
                     await context.PostAsync($"O PA {filial.Numero} está na cidade de { filial.Municipio}/{ filial.UF}");
                     context.Wait(MessageReceived);
