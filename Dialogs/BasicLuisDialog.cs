@@ -28,7 +28,7 @@ namespace Microsoft.Bot.Sample.LuisBot
             await context.PostAsync("Olá! Eu sou o Credicitrus Bot \U0001F916");
             context.Wait(MessageReceived);
 
-            await context.PostAsync("Sou novo na empresa e ainda estou aprendendo muitas coisas. Você precisa de alguma ajuda?");
+            await context.PostAsync("Sou novo na Cooperativa e ainda estou aprendendo muitas coisas. Você precisa de alguma ajuda?");
             context.Wait(MessageReceived);
         }
 
