@@ -23,17 +23,9 @@ namespace Microsoft.Bot.Sample.LuisBot
         [LuisIntent("")]
         public async Task None(IDialogContext context, LuisResult result)
         {
-            //string message = $"I'm the Cred Bot. I can understand requests to create, delete, and read notes. \n\n Detected intent: " + string.Join(", ", result.Intents.Select(i => i.Intent));
-            //string message = "Olá! Eu sou o Credicitrus Bot. Sou novo na empresa e ainda estou aprendendo muitas coisas. Você precisa de alguma ajuda?";
             await context.PostAsync("Desculpe, não consegui entender o que você disse \U0001F614 \n Tente novamente");
             context.Wait(MessageReceived);
         }
-
-        //[LuisIntent("None")]
-        //public async Task NoneIntent(IDialogContext context, LuisResult result)
-        //{
-        //    await this.ShowLuisResult(context, result);
-        //}
 
         // Go to https://luis.ai and create a new intent, then train/publish your luis app.
         // Finally replace "Greeting" with the name of your newly created intent in the following handler
@@ -41,7 +33,12 @@ namespace Microsoft.Bot.Sample.LuisBot
         public async Task GreetingIntent(IDialogContext context, LuisResult result)
         {
             await this.ShowLuisResult(context, result);
-            //await context.PostAsync($"Olá! Qual seu nome?");
+        }
+
+        [LuisIntent("PA")]
+        public async Task PAIntent(IDialogContext context, LuisResult result)
+        {
+            await this.ShowLuisResult(context, result);
         }
 
         [LuisIntent("Cancel")]
