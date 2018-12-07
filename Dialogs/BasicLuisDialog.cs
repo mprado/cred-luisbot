@@ -51,16 +51,13 @@ namespace Microsoft.Bot.Sample.LuisBot
                 if ((result.Query.Contains("localização")) ||
                 (result.Query.Contains("localizacao")) ||
                 (result.Query.Contains("onde")) ||
-                (result.Query.Contains("onde")) ||
-                (result.Query.Contains("onde")) ||
                 (result.Query.Contains("endereço")) ||
                 (result.Query.Contains("endereco")))
                 {
                     await context.PostAsync($"A localização do PA {filial.Numero} é... \n { filial.Endereco}, { filial.Bairro} - { filial.Municipio}/{ filial.UF}");
                     context.Wait(MessageReceived);
                 }
-
-                if (result.Query.Contains("qual é"))
+                else if (result.Query.Contains("qual é") || result.Query.Contains("qual e"))
                 {
                     await context.PostAsync($"O PA {filial.Numero} está na cidade de { filial.Municipio}/{ filial.UF}");
                     context.Wait(MessageReceived);
