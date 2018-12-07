@@ -58,7 +58,10 @@ namespace Microsoft.Bot.Sample.LuisBot
 
         private async Task ShowLuisResult(IDialogContext context, LuisResult result)
         {
-            await context.PostAsync($"Intenção: {result.Intents[0].Intent}. Você disse: {result.Query}");
+            string entities = "Entidades:\n";
+            result.Entities.ToList().ForEach(x => entities += string.Format("{0}: {1}\n", x.Entity, x.Score.ToString()));
+
+            await context.PostAsync($"Você disse: {result.Query} \n Intenção: { result.Intents[0].Intent} \n " + entities);
             context.Wait(MessageReceived);
         }
     }
