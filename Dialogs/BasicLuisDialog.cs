@@ -25,10 +25,7 @@ namespace Microsoft.Bot.Sample.LuisBot
         {
             //string message = $"I'm the Cred Bot. I can understand requests to create, delete, and read notes. \n\n Detected intent: " + string.Join(", ", result.Intents.Select(i => i.Intent));
             //string message = "Olá! Eu sou o Credicitrus Bot. Sou novo na empresa e ainda estou aprendendo muitas coisas. Você precisa de alguma ajuda?";
-            await context.PostAsync("Olá! Eu sou o Credicitrus Bot \U0001F916");
-            context.Wait(MessageReceived);
-
-            await context.PostAsync("Sou novo na Cooperativa e ainda estou aprendendo muitas coisas. Você precisa de alguma ajuda?");
+            await context.PostAsync("Olá! Eu sou o Credicitrus Bot \U0001F916 \n Sou novo na Cooperativa e ainda estou aprendendo muitas coisas. Você precisa de alguma ajuda?");
             context.Wait(MessageReceived);
         }
 

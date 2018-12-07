@@ -55,7 +55,7 @@ namespace Microsoft.Bot.Sample.LuisBot
                 var client = new ConnectorClient(new Uri(message.ServiceUrl), new MicrosoftAppCredentials());
                 if (update.MembersAdded != null && update.MembersAdded.Any())
                 {
-                    var reply = message.CreateReply("Olá! Eu sou o Credicitrus Bot. \U0001F916 \n Sou novo na empresa e ainda estou aprendendo muitas coisas. Você precisa de alguma ajuda?");
+                    var reply = message.CreateReply("Olá! Eu sou o Credicitrus Bot. \U0001F916 \n Sou novo na Cooperativa e ainda estou aprendendo muitas coisas. Você precisa de alguma ajuda?");
                     ConnectorClient connector = new ConnectorClient(new Uri(message.ServiceUrl));
                     await connector.Conversations.ReplyToActivityAsync(reply);
 
